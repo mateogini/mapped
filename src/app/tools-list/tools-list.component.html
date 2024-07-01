@@ -1,0 +1,38 @@
+<h1>Lista de Útiles</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Imagen</th>
+            <th>Compra</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (tool of tools; track tool.name){
+        <tr>
+            <td>{{tool.name}}</td>
+            <td>{{tool.type}}</td>
+            <td>{{tool.price | currency}}</td>
+            @if(tool.stock>0){
+            <td>{{tool.stock}}</td>
+            }
+            @else{
+            <td class="badge badge-warning" background-color="red">SIN STOCK</td>
+            }
+            <td> <img src="{{tool.image}}"></td>
+            <td>
+            <app-input-number [(quantity)]="tool.quantity" [max]="tool.stock" (maxReached) = "maxReached($event)"></app-input-number>
+            <button class="btn btn-primary" (click) = "addToCart(tool)"> Añadir Al Carrito</button>
+            </td>
+        </tr>
+        }
+        @empty {
+        <tr>
+            <td colspan="4">No hay utiles para mostrar</td>
+        </tr>
+        }
+    </tbody>
+</table>
